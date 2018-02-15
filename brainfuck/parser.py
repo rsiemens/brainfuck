@@ -5,7 +5,8 @@ from brainfuck.ast import (
     ByteIncrement,
     ByteDecrement,
     ByteIn,
-    ByteOut
+    ByteOut,
+    Loop
 )
 
 

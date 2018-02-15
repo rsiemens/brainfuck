@@ -1,6 +1,6 @@
 import sys
 
-from ast.parser import Parser
+from brainfuck.parser import Parser
 
 
 class State(object):
@@ -24,3 +24,4 @@ class Evaluator(object):
         if self.newline:
             ostream.write('\n')
         ostream.flush()
+        return state

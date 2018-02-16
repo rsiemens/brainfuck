@@ -1,4 +1,6 @@
+[
 Credit: http://esoteric.sange.fi/brainfuck/bf-source/prog/fibonacci.txt
+]
 
 +++++++++++ number of digits to output
 > #1

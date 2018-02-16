@@ -7,7 +7,7 @@ Basic usage looks like...
 python -m brainfuck -n fibo.bf
 >> 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89
 ```
-> Note: the example programs here can be found in the examples directory):
+> Note: the example programs here can be found in the [examples](examples/) directory)
 
 stdin and stdout are the default i/o streams so you can do something like this.
 ```

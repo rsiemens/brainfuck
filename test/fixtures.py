@@ -1,3 +1,10 @@
+import sys
+
+if sys.version_info >= (3, 0):
+    from io import StringIO
+else:
+    from StringIO import StringIO
+
 programs = [
     {
         "program": """\
@@ -42,4 +49,12 @@ Pointer :   ^
         "input": "The quick brown fox jumps over the lazy dog",
         "output": "The quick brown fox jumps over the lazy dog"
     }
+]
+
+error_inputs = [
+    "+]>+<-]",
+    "+[>+<-[",
+    "+]>+<-[",
+    "+[[-]",
+    "+[-]]",
 ]

@@ -1,13 +1,8 @@
-import sys
 import unittest
-if sys.version_info >= (3, 0):
-    from io import StringIO
-else:
-    from StringIO import StringIO
 
 from brainfuck.evaluator import Evaluator
 
-from test.fixtures import programs
+from test.fixtures import programs, StringIO
 
 
 class EvaluatorTestCase(unittest.TestCase):

@@ -37,7 +37,7 @@ class Parser(object):
             return False
         return True
 
-    def parse(self, program):
+    def parse(self, program, optimize=False):
         expressions = []
 
         if not self.brackets_balanced(program):
@@ -66,4 +66,8 @@ class Parser(object):
                     expression = expressions.pop()
                 # children expressions are backwards since we pop'd them
                 expressions.append(Loop(children[::-1]))
+
+        if optimize:
+            pass
+
         return AST(expressions)

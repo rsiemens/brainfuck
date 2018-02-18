@@ -19,6 +19,11 @@ def parse_args():
         action="store_true",
         help="append a newline to the programs output"
     )
+    parser.add_argument(
+        "-o",
+        action="store_true",
+        help="perform runtime optimization to speed up execution"
+    )
     return parser.parse_args()
 
 
@@ -34,4 +39,4 @@ def run():
     args = parse_args()
     with open(args.file, 'r') as f:
         with time_run(args.t):
-            eval(f.read(), append_newline=args.n)
+            eval(f.read(), append_newline=args.n, optimize=args.o)

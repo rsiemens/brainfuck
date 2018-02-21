@@ -68,6 +68,42 @@ class Parser(object):
                 expressions.append(Loop(children[::-1]))
 
         if optimize:
-            pass
+            expressions = self.optimize(expressions)
 
         return AST(expressions)
+
+    def optimize(self, expressions):
+        optimizable = [
+            PointerIncrement,
+            PointerDecrement,
+            ByteIncrement,
+            ByteDecrement,
+        ]
+        count = 1
+        current = expressions[0]
+        optimized = [expressions[0]]
+
+        for i in range(1, len(expressions)):
+            if type(expressions[i]) == Loop:
+                if count > 1 and type(current) in optimizable:
+                    current.amount = count
+                optimized.append(expressions[i])
+                expressions[i].children = self.optimize(expressions[i].children)
+                current = expressions[i]
+                count = 1
+            elif type(expressions[i]) != type(current):
+                if count > 1 and type(current) in optimizable:
+                    current.amount = count
+                optimized.append(expressions[i])
+                current = expressions[i]
+                count = 1
+            elif type(expressions[i]) not in optimizable:
+                optimized.append(expressions[i])
+                current = expressions[i]
+                count = 1
+            else:
+                count += 1
+        if count > 1 and type(current) in optimizable:
+            current.amount = count
+
+        return optimized

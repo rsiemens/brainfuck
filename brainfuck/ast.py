@@ -5,30 +5,28 @@ class Expression(object):
 
 class PointerIncrement(Expression):
     def interpret(self, state):
-        state.pointer += 1
-        if state.pointer > len(state.memory) - 1:
-            state.pointer = 0
+        amount = getattr(self, 'amount', 1)
+        state.pointer = (state.pointer + amount) % len(state.memory)
 
 
 class PointerDecrement(Expression):
     def interpret(self, state):
-        state.pointer -= 1
-        if state.pointer < 0:
-            state.pointer = len(state.memory) - 1
+        amount = getattr(self, 'amount', 1)
+        state.pointer = (state.pointer - amount) % len(state.memory)
 
 
 class ByteIncrement(Expression):
     def interpret(self, state):
-        state.memory[state.pointer] += 1
-        if state.memory[state.pointer] > 255:
-            state.memory[state.pointer] = 0
+        amount = getattr(self, 'amount', 1)
+        value = state.memory[state.pointer]
+        state.memory[state.pointer] = (value + amount) % 256
 
 
 class ByteDecrement(Expression):
     def interpret(self, state):
-        state.memory[state.pointer] -= 1
-        if state.memory[state.pointer] < 0:
-            state.memory[state.pointer] = 255
+        amount = getattr(self, 'amount', 1)
+        value = state.memory[state.pointer]
+        state.memory[state.pointer] = (value - amount) % 256
 
 
 class ByteIn(Expression):

@@ -1,3 +1,4 @@
+"""Brainfuck interpreter cli"""
 import sys
 from time import time
 from argparse import ArgumentParser
@@ -8,7 +9,10 @@ from brainfuck import eval
 
 def parse_args():
     parser = ArgumentParser(description=__doc__)
-    parser.add_argument("file", help="brainfuck program file to run")
+    parser.add_argument(
+        "file",
+        help="brainfuck program file (or code with -c) to run"
+    )
     parser.add_argument(
         "-t",
         action="store_true",
@@ -18,6 +22,11 @@ def parse_args():
         "-n",
         action="store_true",
         help="append a newline to the programs output"
+    )
+    parser.add_argument(
+        "-c",
+        action="store_true",
+        help="brainfuck code string to run"
     )
     return parser.parse_args()
 
@@ -32,6 +41,12 @@ def time_run(should_time):
 
 def run():
     args = parse_args()
-    with open(args.file, 'r') as f:
-        with time_run(args.t):
-            eval(f.read(), append_newline=args.n)
+
+    if args.c:
+        code = args.file
+    else:
+        with open(args.file, 'r') as f:
+            code = f.read()
+
+    with time_run(args.t):
+        eval(code, append_newline=args.n)

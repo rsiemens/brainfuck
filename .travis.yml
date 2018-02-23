@@ -5,5 +5,5 @@ python:
   - "3.5"
   - "3.6"
 script:
-  - if [[ $TRAVIS_PYTHON_VERSION != '3.6' ]]; then py.test 
-  - if [[ $TRAVIS_PYTHON_VERSION == '3.6' ]]; then pytest 
+  - if [[ $TRAVIS_PYTHON_VERSION != '3.6' ]]; then py.test; fi 
+  - if [[ $TRAVIS_PYTHON_VERSION == '3.6' ]]; then pytest; fi

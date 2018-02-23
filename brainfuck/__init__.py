@@ -10,5 +10,6 @@ __license__ = "MIT"
 
 
 def eval(program, input_stream=sys.stdin, output_stream=sys.stdout,
-         append_newline=False):
-    Evaluator(append_newline).evaluate(program, input_stream, output_stream)
+         append_newline=False, optimize=False):
+    evaluator = Evaluator(append_newline, optimize)
+    evaluator.evaluate(program, input_stream, output_stream)

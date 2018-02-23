@@ -10,7 +10,8 @@ from brainfuck.ast import (
     ByteDecrement,
     ByteIn,
     ByteOut,
-    Loop
+    Loop,
+    ResetLoop
 )
 
 from test.fixtures import StringIO
@@ -73,6 +74,13 @@ class AstTestCase(unittest.TestCase):
             ByteOut().interpret(self.state)
         self.ostream.seek(0)
         self.assertEqual(self.ostream.read(), printable)
+
+    def test_reset_loop(self):
+        self.state.pointer = 3
+        self.state.memory[self.state.pointer] = 123
+        reset_loop = ResetLoop()
+        reset_loop.interpret(self.state)
+        self.assertEqual(self.state.memory[self.state.pointer], 0)
 
     def test_loop(self):
         pass

@@ -1,0 +1,7 @@
+hanoi.bf
+not optimized: -- Execution time of 2143.18140388 seconds --  # with modulo -- Execution time of 4780.58306289 seconds --
+optimized:  -- Execution time of 2681.67360711 seconds --
+
+mandelbrot.bf
+not optimized:
+optimizied:

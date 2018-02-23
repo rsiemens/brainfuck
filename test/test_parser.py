@@ -1,7 +1,7 @@
 import unittest
 
 from brainfuck.parser import Parser, ParserError
-from brainfuck.ast import AST
+from brainfuck.ast import AST, ResetLoop
 
 from test.fixtures import error_inputs
 
@@ -29,13 +29,26 @@ class ParserTestCase(unittest.TestCase):
         self.assertFalse(p.brackets_balanced('[]]]'))
         self.assertFalse(p.brackets_balanced('[[]['))
 
-    def test_optimize(self):
+    def test_compress(self):
         p = Parser()
-        ast = p.parse('++--+++>><<<-+-+', optimize=True)
-        self.assertEqual(len(ast.children), 9)
+        ast = p.parse('++--+++>><<<-+-+')
+        expressions = p.compress(ast.children)
+        self.assertEqual(len(expressions), 9)
 
-        ast = p.parse('++[--[++]]++[+[-]+]>><<<-+-+', optimize=True)
-        self.assertEqual(len(ast.children), 10)
-        self.assertEqual(len(ast.children[1].children), 2)
-        self.assertEqual(len(ast.children[1].children[1].children), 1)
-        self.assertEqual(len(ast.children[3].children), 3)
+        ast = p.parse('++[--[++]]++[+[-]+]>><<<-+-+',)
+        expressions = p.compress(ast.children)
+        self.assertEqual(len(expressions), 10)
+        self.assertEqual(len(expressions[1].children), 2)
+        self.assertEqual(len(expressions[1].children[1].children), 1)
+        self.assertEqual(len(expressions[3].children), 3)
+
+    def test_reset_loops(self):
+        p = Parser()
+        ast = p.parse('[-]')
+        expressions = p.reset_loops(ast.children)
+        self.assertIsInstance(expressions[0], ResetLoop)
+
+        ast = p.parse('[[-][--]]')
+        expressions = p.reset_loops(ast.children)
+        self.assertIsInstance(expressions[0].children[0], ResetLoop)
+        self.assertNotIsInstance(expressions[0].children[1], ResetLoop)

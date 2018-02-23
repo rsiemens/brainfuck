@@ -1,0 +1,9 @@
+language: python
+python:
+  - "2.7"
+  - "3.4"
+  - "3.5"
+  - "3.6"
+script:
+  - if [[ $TRAVIS_PYTHON_VERSION != '3.6' ]]; then py.test 
+  - if [[ $TRAVIS_PYTHON_VERSION == '3.6' ]]; then pytest 

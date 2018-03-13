@@ -2,4 +2,7 @@ import sys
 
 from brainfuck.cli import run
 
-sys.exit(run())
+try:
+    sys.exit(run())
+except KeyboardInterrupt:
+    sys.exit(0)

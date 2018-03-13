@@ -5,6 +5,7 @@ from argparse import ArgumentParser
 from contextlib import contextmanager
 
 from brainfuck import eval
+from brainfuck.parser import ParserError
 
 
 def parse_args():
@@ -54,4 +55,10 @@ def run():
             code = f.read()
 
     with time_run(args.t):
-        eval(code, append_newline=args.n, optimize=args.o)
+        try:
+            eval(code, append_newline=args.n, optimize=args.o)
+        except ParserError as e:
+            sys.stderr.write("%s: %s\n" % (e.__class__.__name__, e.message))
+            sys.stderr.flush()
+            return 1
+    return 0

@@ -37,7 +37,7 @@ result = outstream.read()
 
 You can use the optimize flag `-o` (or `brainfunk.eval(*args, optimize=True)`)
 to perform some parsing optimizations. Since it adds additional parsing time
-only more complex programs will benifit from it.
+only more complex programs will benefit from it.
 
 Currently the following optimizations are performed with the `-o` flag:
 - Token compressions - Repeat tokens are compacted into one command `+++` becomes `+3`

@@ -77,35 +77,18 @@ class Parser(object):
     def compress(self, expressions):
         """Compress expressions like +++-- into a single addition of 3 and
         subtraction of two instead of three additions and two subtractions.
-        TODO: Clean me up
         """
-        count = 1
-        current = expressions[0]
-        optimized = [expressions[0]]
+        optimized = []
 
-        for i in range(1, len(expressions)):
-            exp = expressions[i]
-            if type(exp) == Loop:
-                if count > 1 and isinstance(current, AdjustableAmount):
-                    current.amount = count
+        for exp in expressions:
+            last = optimized[len(optimized) - 1] if optimized else None
+            if type(last) == type(exp) and isinstance(last, AdjustableAmount):
+                last.increment()
+            elif type(exp) == Loop:
                 optimized.append(exp)
                 exp.children = self.compress(exp.children)
-                current = exp
-                count = 1
-            elif type(exp) != type(current):
-                if count > 1 and isinstance(current, AdjustableAmount):
-                    current.amount = count
-                optimized.append(exp)
-                current = exp
-                count = 1
-            elif not isinstance(current, AdjustableAmount):
-                optimized.append(exp)
-                current = exp
-                count = 1
             else:
-                count += 1
-        if count > 1 and isinstance(current, AdjustableAmount):
-            current.amount = count
+                optimized.append(exp)
 
         return optimized
 
@@ -114,8 +97,8 @@ class Parser(object):
         O(n). This reduces to O(1).
         """
         optimized = []
-        for i in range(len(expressions)):
-            exp = expressions[i]
+
+        for exp in expressions:
             if type(exp) == Loop:
                 if (len(exp.children) == 1 and
                         type(exp.children[0]) == ByteDecrement):
@@ -125,4 +108,5 @@ class Parser(object):
                     optimized.append(exp)
             else:
                 optimized.append(exp)
+
         return optimized

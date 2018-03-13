@@ -17,6 +17,9 @@ class AdjustableAmount(Expression):
     def __init__(self):
         self.amount = 1
 
+    def increment(self):
+        self.amount += 1
+
 
 class PointerIncrement(AdjustableAmount):
     def interpret(self, state):
@@ -56,6 +59,7 @@ class ByteOut(Expression):
     def interpret(self, state):
         char = chr(state.memory[state.pointer])
         state.ostream.write(char)
+        state.ostream.flush()
 
 
 class Loop(Expression):

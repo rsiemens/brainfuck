@@ -10,6 +10,20 @@ class State(object):
         self.istream = istream
         self.ostream = ostream
 
+    def __repr__(self):
+        return "<State pointer:%d value:%d>" % (
+            self.pointer,
+            self.memory[self.pointer]
+        )
+
+    def __getitem__(self, key):
+        if isinstance(key, int) or isinstance(key, slice):
+            return self.memory[key]
+        raise TypeError("indices must be int or slice not %s" % type(key))
+
+    def __iter__(self):
+        return iter(self.memory)
+
 
 class Evaluator(object):
     def __init__(self, append_newline=False, optimize=False, parser=Parser):

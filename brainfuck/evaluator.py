@@ -17,9 +17,7 @@ class State(object):
         )
 
     def __getitem__(self, key):
-        if isinstance(key, int) or isinstance(key, slice):
-            return self.memory[key]
-        raise TypeError("indices must be int or slice not %s" % type(key))
+        return self.memory[key]
 
     def __iter__(self):
         return iter(self.memory)

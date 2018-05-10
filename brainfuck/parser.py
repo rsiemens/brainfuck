@@ -93,15 +93,16 @@ class Parser(object):
         return optimized
 
     def reset_loops(self, expressions):
-        """Common bf idiom of reseting a memory value to 0 `[-]` which performs
-        O(n). This reduces to O(1).
+        """Common bf idiom of reseting a memory value to 0 `[-]` or `[+]` which
+        performs O(n). This reduces it to O(1).
         """
         optimized = []
+        candidates = [ByteDecrement, ByteIncrement]
 
         for exp in expressions:
             if type(exp) == Loop:
                 if (len(exp.children) == 1 and
-                        type(exp.children[0]) == ByteDecrement):
+                        any([isinstance(exp.children[0], t) for t in candidates])):
                     optimized.append(ResetLoop())
                 else:
                     exp.children = self.reset_loops(exp.children)

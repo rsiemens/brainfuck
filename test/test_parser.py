@@ -48,7 +48,13 @@ class ParserTestCase(unittest.TestCase):
         expressions = p.reset_loops(ast.children)
         self.assertIsInstance(expressions[0], ResetLoop)
 
-        ast = p.parse('[[-][--]]')
+        ast = p.parse('[+]')
+        expressions = p.reset_loops(ast.children)
+        self.assertIsInstance(expressions[0], ResetLoop)
+
+        ast = p.parse('[[-][--][+][++]]')
         expressions = p.reset_loops(ast.children)
         self.assertIsInstance(expressions[0].children[0], ResetLoop)
         self.assertNotIsInstance(expressions[0].children[1], ResetLoop)
+        self.assertIsInstance(expressions[0].children[2], ResetLoop)
+        self.assertNotIsInstance(expressions[0].children[3], ResetLoop)

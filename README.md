@@ -39,7 +39,7 @@ more complex programs will benefit from it.
 
 Currently the following optimizations are performed with the `-o` flag:
 - Token compressions - Repeat tokens are compacted into one command `+++` becomes `+3`
-- Reset loops - `[-]` and `[+] which decrements/increment a memory value to 0
+- Reset loops - `[-]` and `[+]` which decrements/increment a memory value to 0
 will simply set them to 0
 
 Depending on your program this can significantly reduce runtime. Consider

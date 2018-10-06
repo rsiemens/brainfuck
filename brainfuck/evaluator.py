@@ -11,10 +11,7 @@ class State(object):
         self.ostream = ostream
 
     def __repr__(self):
-        return "<State pointer:%d value:%d>" % (
-            self.pointer,
-            self.memory[self.pointer]
-        )
+        return "<State pointer:%d value:%d>" % (self.pointer, self.memory[self.pointer])
 
     def __getitem__(self, key):
         return self.memory[key]
@@ -35,6 +32,6 @@ class Evaluator(object):
 
         ast.interpret(state)
         if self.newline:
-            ostream.write('\n')
+            ostream.write("\n")
         ostream.flush()
         return state

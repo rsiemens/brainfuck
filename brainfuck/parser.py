@@ -8,7 +8,7 @@ from brainfuck.ast import (
     ByteOut,
     Loop,
     ResetLoop,
-    AdjustableAmount
+    AdjustableAmount,
 )
 
 
@@ -18,7 +18,7 @@ class ParserError(Exception):
 
 class Parser(object):
     def brackets_balanced(self, program):
-        brackets = [c for c in program if c in '[]']
+        brackets = [c for c in program if c in "[]"]
         stack = []
 
         if len(brackets) == 0:
@@ -27,7 +27,7 @@ class Parser(object):
             return False
 
         for bracket in brackets:
-            if bracket == '[':
+            if bracket == "[":
                 stack.append(bracket)
             else:
                 try:
@@ -43,27 +43,27 @@ class Parser(object):
         expressions = []
 
         if not self.brackets_balanced(program):
-            raise ParserError('Unmatched opening/closing square brackets')
+            raise ParserError("Unmatched opening/closing square brackets")
 
         for token in program:
-            if token == '>':
+            if token == ">":
                 expressions.append(PointerIncrement())
-            elif token == '<':
+            elif token == "<":
                 expressions.append(PointerDecrement())
-            elif token == '+':
+            elif token == "+":
                 expressions.append(ByteIncrement())
-            elif token == '-':
+            elif token == "-":
                 expressions.append(ByteDecrement())
-            elif token == '.':
+            elif token == ".":
                 expressions.append(ByteOut())
-            elif token == ',':
+            elif token == ",":
                 expressions.append(ByteIn())
-            elif token == '[':
+            elif token == "[":
                 expressions.append(token)
-            elif token == ']':
+            elif token == "]":
                 children = []
                 expression = expressions.pop()
-                while expression != '[':
+                while expression != "[":
                     children.append(expression)
                     expression = expressions.pop()
                 # children expressions are backwards since we pop'd them
@@ -101,8 +101,9 @@ class Parser(object):
 
         for exp in expressions:
             if type(exp) == Loop:
-                if (len(exp.children) == 1 and
-                        any([isinstance(exp.children[0], t) for t in candidates])):
+                if len(exp.children) == 1 and any(
+                    [isinstance(exp.children[0], t) for t in candidates]
+                ):
                     optimized.append(ResetLoop())
                 else:
                     exp.children = self.reset_loops(exp.children)

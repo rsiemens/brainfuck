@@ -15,8 +15,8 @@ class EvaluatorTestCase(unittest.TestCase):
     def test_evaluate(self):
         e = Evaluator()
         for program in programs:
-            istream = self.create_istream(program['input'])
+            istream = self.create_istream(program["input"])
             ostream = StringIO()
-            e.evaluate(program['program'], istream, ostream)
+            e.evaluate(program["program"], istream, ostream)
             ostream.seek(0)
-            self.assertEqual(ostream.read(), program['output'])
+            self.assertEqual(ostream.read(), program["output"])

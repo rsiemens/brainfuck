@@ -22,20 +22,20 @@ class ParserTestCase(unittest.TestCase):
 
     def test_brackets_balanced(self):
         p = Parser()
-        self.assertTrue(p.brackets_balanced('[[[]]]'))
-        self.assertTrue(p.brackets_balanced('[90ua\n][asdf][826$%[}{|]]'))
-        self.assertFalse(p.brackets_balanced('[]]'))
-        self.assertFalse(p.brackets_balanced('[[]'))
-        self.assertFalse(p.brackets_balanced('[]]]'))
-        self.assertFalse(p.brackets_balanced('[[]['))
+        self.assertTrue(p.brackets_balanced("[[[]]]"))
+        self.assertTrue(p.brackets_balanced("[90ua\n][asdf][826$%[}{|]]"))
+        self.assertFalse(p.brackets_balanced("[]]"))
+        self.assertFalse(p.brackets_balanced("[[]"))
+        self.assertFalse(p.brackets_balanced("[]]]"))
+        self.assertFalse(p.brackets_balanced("[[]["))
 
     def test_compress(self):
         p = Parser()
-        ast = p.parse('++--+++>><<<-+-+')
+        ast = p.parse("++--+++>><<<-+-+")
         expressions = p.compress(ast.children)
         self.assertEqual(len(expressions), 9)
 
-        ast = p.parse('++[--[++]]++[+[-]+]>><<<-+-+',)
+        ast = p.parse("++[--[++]]++[+[-]+]>><<<-+-+")
         expressions = p.compress(ast.children)
         self.assertEqual(len(expressions), 10)
         self.assertEqual(len(expressions[1].children), 2)
@@ -44,15 +44,15 @@ class ParserTestCase(unittest.TestCase):
 
     def test_reset_loops(self):
         p = Parser()
-        ast = p.parse('[-]')
+        ast = p.parse("[-]")
         expressions = p.reset_loops(ast.children)
         self.assertIsInstance(expressions[0], ResetLoop)
 
-        ast = p.parse('[+]')
+        ast = p.parse("[+]")
         expressions = p.reset_loops(ast.children)
         self.assertIsInstance(expressions[0], ResetLoop)
 
-        ast = p.parse('[[-][--][+][++]]')
+        ast = p.parse("[[-][--][+][++]]")
         expressions = p.reset_loops(ast.children)
         self.assertIsInstance(expressions[0].children[0], ResetLoop)
         self.assertNotIsInstance(expressions[0].children[1], ResetLoop)

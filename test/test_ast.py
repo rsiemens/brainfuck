@@ -11,7 +11,7 @@ from brainfuck.ast import (
     ByteIn,
     ByteOut,
     Loop,
-    ResetLoop
+    ResetLoop,
 )
 
 from test.fixtures import StringIO

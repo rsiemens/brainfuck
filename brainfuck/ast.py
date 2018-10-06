@@ -74,6 +74,7 @@ class Loop(Expression):
 
 class ResetLoop(Expression):
     """Common bf idiom to set a memory value to 0 `[-]`"""
+
     def interpret(self, state):
         state.memory[state.pointer] = 0
 

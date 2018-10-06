@@ -47,14 +47,8 @@ Pointer :   ^
     {
         "program": ",[.[-],]",
         "input": "The quick brown fox jumps over the lazy dog",
-        "output": "The quick brown fox jumps over the lazy dog"
-    }
+        "output": "The quick brown fox jumps over the lazy dog",
+    },
 ]
 
-error_inputs = [
-    "+]>+<-]",
-    "+[>+<-[",
-    "+]>+<-[",
-    "+[[-]",
-    "+[-]]",
-]
+error_inputs = ["+]>+<-]", "+[>+<-[", "+]>+<-[", "+[[-]", "+[-]]"]
